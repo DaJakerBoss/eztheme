@@ -4,22 +4,22 @@ Easy (hopefully) way to package the icon theme Sutoroku for Ripped Themer.
 It should be easy, but I'm not all the way done as of this commit.
 
 ## Instructions
-To kick things off, clone this repository onto your computer. 
-You can use `git` or you can just download the .zip file and extract it somewhere
-Open up your computer's terminal and find your way into the repo.
-If you cloned this repo in your terminal it should just be in your home folder:
-`cd ~/sutoroku_installer`
-If you extracted the zip, find where you put it.
-Here's an example for your standard Downloads folder:
+To kick things off, clone this repository onto your computer.  
+You can use `git` or you can just download the .zip file and extract it somewhere  
+Open up your computer's terminal and find your way into the repo.  
+If you cloned this repo in your terminal it should just be in your home folder:  
+`cd ~/sutoroku_installer`  
+If you extracted the zip, find where you put it.  
+Here's an example for your standard Downloads folder:  
 `cd ~/Downloads/sutoroku_installer`
 
-*Hacker voice* You're in.
-The hard part is done. 
-To run the installer, type:
-`./build.sh`
-If it wont run, no problem, just type:
-`chmod +x build.sh`
-and try again. Nothin' to it :)
+*Hacker voice* You're in.  
+The hard part is done.  
+To run the installer, type:  
+`./build.sh`  
+If it wont run, no problem, just type:  
+`chmod +x build.sh`  
+and try again. Nothin' to it :)  
 
 Quick guide to editing `control` if you need it:
 
