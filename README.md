@@ -11,7 +11,8 @@ If you cloned this repo in your terminal it should just be in your home folder:
 `cd ~/sutoroku_installer`  
 If you extracted the zip, find where you put it.  
 Here's an example for your standard Downloads folder:  
-`cd ~/Downloads/sutoroku_installer`
+`cd ~/Downloads/sutoroku_installer`  
+I can make a standalone script if you'd like, for simplicity's sake.
 
 *Hacker voice* You're in.  
 The hard part is done.  
