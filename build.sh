@@ -1,6 +1,7 @@
 #!/bin/bash
 #I'm trying to get this out ASAP, so commenting will be brief
 #Build tool for the sole use of Ripped Themer's Sutoroku theme
+#at least until i get around to something more complicated when i get time
 
 echo "Hello Travis!"
 echo "First things first, let me get eveything in shape"
@@ -20,8 +21,9 @@ if [ -d "~/sutoroku*" ]; then
 	mkdir ~/sutoroku_$version/Library
 	mkdir ~/sutoroku_$version/Library/Themes
 	mkdir ~/sutoroku_$version/DEBIAN
-	mv icon.png ~/sotoruko_$version/Applications/Sutoroku.app/
-	mv control ~/sutoroku_$version/DEBIAN/
+	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	mv $DIR/icon.png ~/sutoruko_$version/Applications/Sutoroku.app/
+	mv $DIR/control ~/sutoroku_$version/DEBIAN/
 	chmod 755 ~/sutoroku_$version/DEBIAN/control
 fi
 echo "right, let's get the actual theme in"
