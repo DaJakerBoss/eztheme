@@ -17,7 +17,7 @@ do
 	d=y
 	break
 done
-if [[ $d != "y" ]] && [[$d != "Y"]]; then
+if [[ $d != "y" ]] && [[ $d != "Y"]]; then
 	echo "It's not there."
 	echo "Let's fix that"
 	mkdir ~/sutoroku_$version
