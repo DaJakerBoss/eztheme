@@ -41,7 +41,7 @@ echo "alright! everything's in!"
 echo ""
 echo "Would you like to change the package icon [y/n]?"
 read ico
-if [[ $ico == "y" ]] || [[ $ico == "Y"]]; then
+if [[ $ico == "y" ]] || [[ $ico == "Y" ]]; then
 	echo "okay! drag and drop that file in and press enter like before"
 	read icon
 	echo "alright! got it, copying it in"
