@@ -10,46 +10,71 @@ read version
 echo "Let me see if the directories are there..."
 #Directory check to save time
 shopt -s nullglob
+#clears a variable. described further a few lines down
+d=n
 for path in ~/sutoroku_*/
 do
+	#this code is executed only if a directory starting with sutoroku_ exists
+	#this makes it easier to copy existing assets and change upon existing buildx
 	echo "It is! Saves us some time"
-	cp -r ~/sutoroku_*/ ~/sutoroku_$version/
+	#copies our old icon theme to a new directory
+	#so it wont conflict with how I built the script
+	cp -r ~/sutoroku_*/ ~/sutoroku.old/
+	cp -r ~/sutoroku.old/ ~/sutoroku_$version/
+	#this variable here tells the rest of the script whether or not that file was found
+	#really only used in the if statement 4 lines down
 	d=y
 	break
 done
-if [[ $d != "y" ]] && [[ $d != "Y"]]; then
+#uses our variable d here
+#human translation:
+#if the variable d does not equal y, then we must create the neccesary directories
+if [[ $d != "y" ]]; then
 	echo "It's not there."
 	echo "Let's fix that"
+	#where the .debs are stored
+	mkdir ~/packaged_themes
+	#where the previous raw folder is stored
+	mkdir ~/sutoroku.old
+	#the directories we need to package the .deb
 	mkdir ~/sutoroku_$version
 	mkdir ~/sutoroku_$version/Applications
 	mkdir ~/sutoroku_$version/Applications/Sutoroku.app
 	mkdir ~/sutoroku_$version/Library
 	mkdir ~/sutoroku_$version/Library/Themes
 	mkdir ~/sutoroku_$version/DEBIAN
+	#finding out where we are
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-	mv $DIR/icon.png ~/sutoruko_$version/Applications/Sutoroku.app/
+	#moving necessary resources and setting proper permissions
+	cp $DIR/icon.png ~/sutoruko_$version/Applications/Sutoroku.app/
 	chmod 755 ~$DIR/control
-	mv $DIR/control ~/sutoroku_$version/DEBIAN/
+	cp $DIR/control ~/sutoroku_$version/DEBIAN/
 fi
 echo "right, let's get the actual theme in"
 echo "go ahead and drag the folder Sutoroku.theme into the terminal"
 echo "then press enter"
 read dir
 echo "copying it in"
+#straight copying the root folder in
+#This may need changing for using multiple themes (like alts)
+#I'm keeping it wthis way for now, until I can get the existing code done
 cp $dir ~/sutoroku_$version/Library/Themes/
 echo "alright! everything's in!"
 echo ""
 echo "Would you like to change the package icon [y/n]?"
 read ico
+#if then statements determines if you want to change it. y and Y for case sensitivity"
 if [[ $ico == "y" ]] || [[ $ico == "Y" ]]; then
 	echo "okay! drag and drop that file in and press enter like before"
 	read icon
 	echo "alright! got it, copying it in"
+	#copies the icon and changes the name to match our control file
 	cp -r $icon ~/sutoroku_$version/Applications/Sutoroku.app/icon.png
 	echo "done!"
 	else
 	echo "alright!"
 fi
+#speaking of control file
 echo ""
 echo ""
 echo "I am going to open the 'control' file."
@@ -57,12 +82,19 @@ echo "this file is a little too advanced for me to parse, since I'm not too well
 echo "You can get everything updated as you need. Press Ctrl + O (omega)[Write Out] , then enter to save the file"
 echo "Everything should be obvious :)"
 echo "if not check the README.md"
-echo "when you're ready press enter"
+echo "when you're ready press any key"
+#just a silent function to detect key input
 read -n 1 -s
 nano ~/sutoroku_$version/DEBIAN/control
 clear
 echo "alright, let's go!"
 echo "I'm starting the compile"
+#actual compiler. the whole shebang.
 dpkg-deb -Zgzip -b ~/sutoroku_$version
-echo "that's all! the new .deb is in your home directory!"
+#moving the .deb to a folder so it wont conflict with the script
+#also benefits tidiness
+mv ~/sutoroku*.deb ~/packaged_themes/
+echo "All done! The .deb is stored in the packaged_themes folder in your home folder"
+ehco "have a nice day!"
+#quit the script
 exit
