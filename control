@@ -1,10 +1,10 @@
-Package: com.packix.rippedthemer.sutoroku
+Package: com.rippedthemer.sutoroku
 Name: Sutoroku iOS
 Version: 1.0
 Section: Themes
 Architecture: iphoneos-arm
 Depends: com.anemonetheming.anemone
-Maintainer: DaJakerBoss (for now) <jakerh08@gmail.com>
+Maintainer: DaJakerBoss <jakerh08@gmail.com>
 Author: Ripped Themer <rippedthemer@gmail.com>
 Description: The official icon package for Sutoroku iOS
 Icon: file:///Applications/Sutoroku.app/icon.png
