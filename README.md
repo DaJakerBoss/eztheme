@@ -20,9 +20,9 @@ I can make a standalone script for git if you'd like, for simplicity's sake.
 *Hacker voice* You're in.  
 The hard part is done.  
 To run the installer, type:  
-`./build.sh`  
+`./build`  
 If it wont run, no problem, just type:  
-`chmod +x build.sh`  
+`chmod +x build`  
 and try again. Nothin' to it :)  
 
 Quick guide to editing `control` if you need it:
