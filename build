@@ -19,8 +19,8 @@ do
 	echo "It is! Saves us some time"
 	#copies our old icon theme to a new directory
 	#so it wont conflict with how I built the script
-	cp -r ~/sutoroku_*/ ~/sutoroku.old/
-	cp -r ~/sutoroku.old/ ~/sutoroku_$version/
+	cp -a ~/sutoroku_*/ ~/sutoroku.old/
+	mv ~/sutoroku_* ~/sutoroku_$version
 	#this variable here tells the rest of the script whether or not that file was found
 	#really only used in the if statement 4 lines down
 	d=y
@@ -46,19 +46,25 @@ if [[ $d != "y" ]]; then
 	#finding out where we are
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	#moving necessary resources and setting proper permissions
-	cp $DIR/icon.png ~/sutoruko_$version/Applications/Sutoroku.app/
-	chmod 755 ~$DIR/control
-	cp $DIR/control ~/sutoroku_$version/DEBIAN/
+	cp $DIR/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/
+	chmod 755 $DIR/control
+	cp $DIR/control ~/sutoroku_$version/DEBIAN/control
 fi
 echo "right, let's get the actual theme in"
 echo "go ahead and drag the folder Sutoroku.theme into the terminal"
 echo "then press enter"
 read dir
 echo "copying it in"
-#straight copying the root folder in
+#straight moving the root folder in
+#
+## PLEASE BEWARE THAT DUE TO THE LIMITATIONS OF CP I HAVE TO MOVE IT, NOT COPY IT
+## THE FOLDER WILL NOT BE WHERE YOU LEFT IT
+## If you would like to retreive the folder, you may copy it yourself
+## in your home folder: sutoroku_[version]/Library/Themes/
+#
 #This may need changing for using multiple themes (like alts)
 #I'm keeping it wthis way for now, until I can get the existing code done
-cp $dir ~/sutoroku_$version/Library/Themes/
+mv "${dir//\'}" ~/sutoroku_$version/Library/Themes/
 echo "alright! everything's in!"
 echo ""
 echo "Would you like to change the package icon [y/n]?"
@@ -68,8 +74,10 @@ if [[ $ico == "y" ]] || [[ $ico == "Y" ]]; then
 	echo "okay! drag and drop that file in and press enter like before"
 	read icon
 	echo "alright! got it, copying it in"
+	#first we rename the old to remove conflicts
+	mv ~/sutoroku_$version/Applications/Sutoroku.app/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/icon-old.png
 	#copies the icon and changes the name to match our control file
-	cp -r $icon ~/sutoroku_$version/Applications/Sutoroku.app/icon.png
+	cp "$icon" ~/sutoroku_$version/Applications/Sutoroku.app/icon.png
 	echo "done!"
 	else
 	echo "alright!"
@@ -90,11 +98,12 @@ clear
 echo "alright, let's go!"
 echo "I'm starting the compile"
 #actual compiler. the whole shebang.
+chmod 755 ~/sutoroku_$version/DEBIAN/control
 dpkg-deb -Zgzip -b ~/sutoroku_$version
 #moving the .deb to a folder so it wont conflict with the script
 #also benefits tidiness
 mv ~/sutoroku*.deb ~/packaged_themes/
 echo "All done! The .deb is stored in the packaged_themes folder in your home folder"
-ehco "have a nice day!"
+echo "have a nice day!"
 #quit the script
 exit
