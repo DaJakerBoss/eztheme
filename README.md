@@ -26,7 +26,7 @@ If it wont run, no problem, just type:
 `chmod +x build`  
 and try again. Nothin' to it :)  
 
-## Installing and Using Git with this script
+#### Installing and Using Git with this script
 
 Step 1: Install it!
 ```
