@@ -3,7 +3,7 @@ Name: Sutoroku iOS
 Version: 1.0
 Section: Themes
 Architecture: iphoneos-arm
-Depends: com.anemonetheming.anemone
+Depends: firmware (>= 8.0), com.anemonetheming.anemone
 Maintainer: DaJakerBoss <jakerh08@gmail.com>
 Author: Ripped Themer <rippedthemer@gmail.com>
 Description: The official icon package for Sutoroku iOS

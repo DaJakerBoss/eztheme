@@ -50,34 +50,38 @@ if [[ $d != "y" ]]; then
 	chmod 755 $DIR/control
 	cp $DIR/control ~/sutoroku_$version/DEBIAN/control
 fi
-echo "right, let's get the actual theme in"
-echo "go ahead and drag the folder Sutoroku.theme into the terminal"
-echo "then press enter"
-read dir
-echo "copying it in"
 #straight moving the root folder in
-#
-## PLEASE BEWARE THAT DUE TO THE LIMITATIONS OF CP I HAVE TO MOVE IT, NOT COPY IT
-## THE FOLDER WILL NOT BE WHERE YOU LEFT IT
-## If you would like to retreive the folder, you may copy it yourself
-## in your home folder: sutoroku_[version]/Library/Themes/
-#
-#This may need changing for using multiple themes (like alts)
-#I'm keeping it wthis way for now, until I can get the existing code done
-cp -a "${dir//\'}" ~/sutoroku_$version/Library/Themes/
-echo "alright! everything's in!"
-echo ""
-echo "Would you like to change the package icon [y/n]?"
+#This has been changed for using multiple themes (like alts)
+#We'll have to see how it works!
+echo 
+if [[ $d != "y" ]]; then
+	echo "go ahead and drag the folder Sutoroku.theme into the terminal"
+	cp=y
+	else
+	echo "Would you like to update or add the icon themes? [y/n]"
+	read cp
+fi
+#while loop so you can infinitely add icon themes
+while [[ $cp == "y" ]]
+	do
+	echo "Drag and drop your theme folder and press enter:"
+	read dir
+	cp -rfa "${dir//\'}" ~/sutoroku_$version/Library/Themes/
+	echo "alright! everything's in!"
+	echo "would you like to add or change anymore? [y/n]"
+	read cp
+done
+echo "Would you like to change or add the package icon [y/n]?"
 read ico
 #if then statements determines if you want to change it. y and Y for case sensitivity"
 if [[ $ico == "y" ]] || [[ $ico == "Y" ]]; then
 	echo "okay! drag and drop that file in and press enter like before"
 	read icon
 	echo "alright! got it, copying it in"
-	#first we rename the old to remove conflicts
-	mv ~/sutoroku_$version/Applications/Sutoroku.app/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/icon-old.png
+	#first we rename the old to remove conflicts if it exists
+	mv ~/sutoroku_$version/Applications/Sutoroku.app/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/icon-old.png 2>/dev/null
 	#copies the icon and changes the name to match our control file
-	cp "$icon" ~/sutoroku_$version/Applications/Sutoroku.app/icon.png
+	cp -rf "$icon" ~/sutoroku_$version/Applications/Sutoroku.app/icon.png
 	echo "done!"
 	else
 	echo "alright!"
@@ -86,10 +90,11 @@ fi
 echo ""
 echo ""
 echo "I am going to open the 'control' file."
-echo "this file is a little too advanced for me to parse, since I'm not too well versed in that"
-echo "You can get everything updated as you need. Press Ctrl + O (omega)[Write Out] , then enter to save the file"
+echo "This file is a little too advanced for me to parse, since I'm not too well versed with that using bash"
+echo "You can get everything updated as you need. Press Ctrl + O (omega), then enter to save the file"
+echo "From there press Ctrl + X to exit nano"
 echo "Everything should be obvious :)"
-echo "if not check the README.md"
+echo "if not, the README.md has a nice little description of everything in the control file"
 echo "when you're ready press any key"
 #just a silent function to detect key input
 read -n 1 -s
@@ -99,6 +104,7 @@ echo "alright, let's go!"
 echo "I'm starting the compile"
 #actual compiler. the whole shebang.
 chmod 755 ~/sutoroku_$version/DEBIAN/
+chmod 755 ~/sutoroku_$version/DEBIAN/*
 dpkg-deb -Zgzip -b ~/sutoroku_$version
 #moving the .deb to a folder so it wont conflict with the script
 #also benefits tidiness
@@ -107,3 +113,4 @@ echo "All done! The .deb is stored in the packaged_themes folder in your home fo
 echo "have a nice day!"
 #quit the script
 exit
+
