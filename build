@@ -3,11 +3,13 @@
 #Build tool for the sole use of Ripped Themer's Sutoroku theme
 #at least until i get around to something more complicated when i get time
 
+clear
 echo "Hello Ripped Themer!"
 echo "First things first, let me get eveything in shape"
 echo "What version is this?"
 read version
 echo "Let me see if the directories are there..."
+echo ""
 #Directory check to save time
 shopt -s nullglob
 #clears a variable. described further a few lines down
@@ -28,7 +30,7 @@ do
 done
 #uses our variable d here
 #human translation:
-#if the variable d does not equal y, then we must create the neccesary directories
+#if the directories don't yet exist, then we must create the neccesary directories
 if [[ $d != "y" ]]; then
 	echo "It's not there."
 	echo "Let's fix that"
@@ -47,15 +49,17 @@ if [[ $d != "y" ]]; then
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	#moving necessary resources and setting proper permissions
 	cp $DIR/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/
-	chmod 755 $DIR/control
+	cp $DIR/preinst ~/sutoroku_$version/DEBIAN/preinst
+	cp $DIR/postinst ~/sutoroku_$version/DEBIAN/postinst
 	cp $DIR/control ~/sutoroku_$version/DEBIAN/control
 fi
 #straight moving the root folder in
 #This has been changed for using multiple themes (like alts)
 #We'll have to see how it works!
-echo 
+#Mandatory theme copy for first run instance
 if [[ $d != "y" ]]; then
-	echo "go ahead and drag the folder Sutoroku.theme into the terminal"
+	echo "Go ahead and drag the folder Sutoroku.theme into the terminal"
+	echo ""
 	cp=y
 	else
 	echo "Would you like to update or add the icon themes? [y/n]"
@@ -66,28 +70,30 @@ while [[ $cp == "y" ]]
 	do
 	echo "Drag and drop your theme folder and press enter:"
 	read dir
+	echo ""
 	cp -rfa "${dir//\'}" ~/sutoroku_$version/Library/Themes/
-	echo "alright! everything's in!"
-	echo "would you like to add or change anymore? [y/n]"
+	echo "Alright! everything's in!"
+	echo "Would you like to add or change anymore? [y/n]"
 	read cp
 done
 echo "Would you like to change or add the package icon [y/n]?"
 read ico
+echo ""
 #if then statements determines if you want to change it. y and Y for case sensitivity"
 if [[ $ico == "y" ]] || [[ $ico == "Y" ]]; then
-	echo "okay! drag and drop that file in and press enter like before"
+	echo "Okay! drag and drop that file in and press enter like before"
 	read icon
-	echo "alright! got it, copying it in"
+	echo ""
+	echo "Alright! Got it, copying it in now."
 	#first we rename the old to remove conflicts if it exists
 	mv ~/sutoroku_$version/Applications/Sutoroku.app/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/icon-old.png 2>/dev/null
 	#copies the icon and changes the name to match our control file
 	cp -rf "$icon" ~/sutoroku_$version/Applications/Sutoroku.app/icon.png
 	echo "done!"
 	else
-	echo "alright!"
+	echo "Alright!"
 fi
 #speaking of control file
-echo ""
 echo ""
 echo "I am going to open the 'control' file."
 echo "This file is a little too advanced for me to parse, since I'm not too well versed with that using bash"
@@ -100,17 +106,17 @@ echo "when you're ready press any key"
 read -n 1 -s
 nano ~/sutoroku_$version/DEBIAN/control
 clear
-echo "alright, let's go!"
 echo "I'm starting the compile"
-#actual compiler. the whole shebang.
+#quick permissions for our friend the compiler
 chmod 755 ~/sutoroku_$version/DEBIAN/
 chmod 755 ~/sutoroku_$version/DEBIAN/*
+#DO THE THING
 dpkg-deb -Zgzip -b ~/sutoroku_$version
 #moving the .deb to a folder so it wont conflict with the script
 #also benefits tidiness
 mv ~/sutoroku*.deb ~/packaged_themes/
 echo "All done! The .deb is stored in the packaged_themes folder in your home folder"
-echo "have a nice day!"
+echo "Have a nice day!"
 #quit the script
 exit
 
