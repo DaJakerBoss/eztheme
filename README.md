@@ -95,6 +95,15 @@ If you'd like to change these any, feel welcome to it!
 The standard command to put out text is `echo "[message]"`  
 You can add lines to your liking :-)
 
+### Side note for compiling
+I have noted that `dpkg` will throw warnings in my script for the control file. Here's what that means:
+
+`dpkg` as it has been installed on your system is not accustomed to haveing certain fields on the control file filled out. It specifies these lines as "user-defined"  
+Cydia and the iOS `dpkg` that Saurik included are in fact compatible with these lines, and require a few.  
+I didn't want to censor these messages in case it threw you an actual error and you needed to let me know.  
+If you see these, it's safe to ignore them :-)  
+
+
 
 If you have *any questions* just email me. I love this stuff.
 
