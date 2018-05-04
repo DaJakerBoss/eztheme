@@ -73,8 +73,15 @@ Description | What pops up in Cydia as the description
 Icon | Tells Cydia what to use as an icon. Don't touch, I've handled it in the script.
 
 ### Editing the `control` file:
+This script uses the easy-to-learn and popular editing tool `nano`
 
-There are a few that will need your attention:
+There are only a few things you need to know:  
+Write out (^O or Ctrl + O [as in oh not zero]) saves the file, and enter confirms the save
+Exit command (^X or Ctrl + X) closes `nano` and continues the program
+
+I decided against `vi` or `vim` since I didn't want to include a 5 page document on how to edit 8 lines of a file.
+
+There are a few lines that will need your attention:
 
 ```
 Depends: firmware (>= 8.0), com.anemonethemeing.anemone
