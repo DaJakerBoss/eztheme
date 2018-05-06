@@ -4,9 +4,11 @@
 #at least until i get around to something more complicated when i get time
 
 clear
-echo "Hello Ripped Themer!"
+echo "Hello Themer!"
 echo "First things first, let me get eveything in shape"
-echo "What version is this?"
+echo "What is them name of this theme?"
+read name
+echo "What is the version?"
 read version
 echo "Let me see if the directories are there..."
 echo ""
@@ -14,15 +16,15 @@ echo ""
 shopt -s nullglob
 #clears a variable. described further a few lines down
 d=n
-for path in ~/eztheme/sutoroku_*/
+for path in ~/eztheme/"$name"_*/
 do
 	#this code is executed only if a directory starting with sutoroku_ exists
 	#this makes it easier to copy existing assets and change upon existing buildx
 	echo "It is! Saves us some time"
 	#copies our old icon theme to a new directory
 	#so it wont conflict with how I built the script
-	cp -a ~/eztheme/sutoroku_*/ ~/eztheme/sutoroku.old/
-	mv ~/eztheme/sutoroku_* ~/eztheme/sutoroku_$version
+	cp -a ~/eztheme/"$name"_*/ ~/eztheme/"$name".old/
+	mv ~/eztheme/"$name"_* ~/eztheme/"$name"_"$version"
 	#this variable here tells the rest of the script whether or not that file was found
 	#really only used in the if statement 4 lines down
 	d=y
@@ -35,31 +37,31 @@ if [[ $d != "y" ]]; then
 	echo "It's not there."
 	echo "Let's fix that"
 	#where the .debs are stored
-	mkdir ~/eztheme
-	mkdir ~/eztheme/packaged_themes
+	#these are silent bc I'm too lazy to deal with situations in which they already exist
+	mkdir ~/eztheme 2>/dev/null
+	mkdir ~/eztheme/packaged_themes 2>/dev/null
 	#where the previous raw folder is stored
-	mkdir ~/eztheme/sutoroku.old
+	mkdir ~/eztheme/"$name".old
 	#the directories we need to package the .deb
-	mkdir ~/eztheme/sutoroku_$version
-	mkdir ~/eztheme/sutoroku_$version/Applications
-	mkdir ~/eztheme/sutoroku_$version/Applications/Sutoroku.app
-	mkdir ~/eztheme/sutoroku_$version/Library
-	mkdir ~/eztheme/sutoroku_$version/Library/Themes
-	mkdir ~/eztheme/sutoroku_$version/DEBIAN
+	mkdir ~/eztheme/"$name"_"$version"
+	mkdir ~/eztheme/"$name"_"$version"/Applications
+	mkdir ~/eztheme/"$name"_"$version"/Applications/"$name".app
+	mkdir ~/eztheme/"$name"_"$version"/Library
+	mkdir ~/eztheme/"$name"_"$version"/Library/Themes
+	mkdir ~/eztheme/"$name"_"$version"/DEBIAN
 	#finding out where we are
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	#moving necessary resources and setting proper permissions
-	cp $DIR/icon.png ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/
-	cp $DIR/preinst ~/eztheme/sutoroku_$version/DEBIAN/preinst
-	cp $DIR/postinst ~/eztheme/sutoroku_$version/DEBIAN/postinst
-	cp $DIR/control ~/eztheme/sutoroku_$version/DEBIAN/control
+	cp $DIR/preinst ~/eztheme/"$name"_"$version"/DEBIAN/preinst
+	cp $DIR/postinst ~/eztheme/"$name"_"$version"/DEBIAN/postinst
+	cp $DIR/control ~/eztheme/"$name"_"$version"/DEBIAN/control
 fi
 #straight moving the root folder in
 #This has been changed for using multiple themes (like alts)
 #We'll have to see how it works!
 #Mandatory theme copy for first run instance
 if [[ $d != "y" ]]; then
-	echo "Go ahead and drag the folder Sutoroku.theme into the terminal"
+	echo "Go ahead and drag the .theme folders into the terminal"
 	echo ""
 	cp=y
 	else
@@ -72,7 +74,7 @@ while [[ $cp == "y" ]]
 	echo "Drag and drop your theme folder and press enter:"
 	read dir
 	echo ""
-	cp -rfa "${dir//\'}" ~/eztheme/sutoroku_$version/Library/Themes/
+	cp -rfa "${dir//\'}" ~/eztheme/"$name"_"$version"/Library/Themes/
 	echo "Alright! everything's in!"
 	echo "Would you like to add or change anymore? [y/n]"
 	read cp
@@ -89,9 +91,9 @@ if [[ $ico == "y" ]] || [[ $ico == "Y" ]]; then
 	#first we rename the old to remove conflicts if it exists
 	#this is silent so that if there is not an existing folder the user does not get an error
 	#there really isn't any threat for the error.
-	mv ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/icon.png ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/icon-old.png 2>/dev/null
+	mv ~/eztheme/"$name"_"$version"/Applications/"$name".app/icon.png ~/eztheme/"$name"_"$version"/Applications/"$name".app/icon-old.png 2>/dev/null
 	#copies the icon and changes the name to match our control file
-	cp -rf "$icon" ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/icon.png
+	cp -rf "$icon" ~/eztheme/"$name"_"$version"/Applications/"$name".app/icon.png
 	echo "done!"
 	else
 	echo "Alright!"
@@ -107,18 +109,18 @@ echo "if not, the README.md has a nice little description of everything in the c
 echo "when you're ready press any key"
 #just a silent function to detect key input
 read -n 1 -s
-nano ~/eztheme/sutoroku_$version/DEBIAN/control
+nano ~/eztheme/"$name"_"$version"/DEBIAN/control
 clear
 echo "I'm starting the compile"
 #quick permissions for our friend the compiler
-chmod 755 ~/eztheme/sutoroku_$version/DEBIAN/
-chmod 755 ~/eztheme/sutoroku_$version/DEBIAN/*
+chmod 755 ~/eztheme/"$name"_"$version"/DEBIAN/
+chmod 755 ~/eztheme/"$name"_"$version"/DEBIAN/*
 #DO THE THING
-dpkg-deb -Zgzip -b ~/eztheme/sutoroku_$version
+dpkg-deb -Zgzip -b ~/eztheme/"$name"_"$version"
 #moving the .deb to a folder so it wont conflict with the script
 #also benefits tidiness
-mv ~/eztheme/sutoroku*.deb ~/eztheme/packaged_themes/
-echo "All done! The .deb is stored in the packaged_themes folder in your home folder"
+mv ~/eztheme/"$name"*.deb ~/eztheme/packaged_themes/
+echo "All done! The .deb is stored in ~/eztheme/packaged_themes/"
 echo "Have a nice day!"
 #quit the script
 exit
