@@ -14,15 +14,15 @@ echo ""
 shopt -s nullglob
 #clears a variable. described further a few lines down
 d=n
-for path in ~/sutoroku_*/
+for path in ~/eztheme/sutoroku_*/
 do
 	#this code is executed only if a directory starting with sutoroku_ exists
 	#this makes it easier to copy existing assets and change upon existing buildx
 	echo "It is! Saves us some time"
 	#copies our old icon theme to a new directory
 	#so it wont conflict with how I built the script
-	cp -a ~/sutoroku_*/ ~/sutoroku.old/
-	mv ~/sutoroku_* ~/sutoroku_$version
+	cp -a ~/eztheme/sutoroku_*/ ~/eztheme/sutoroku.old/
+	mv ~/eztheme/sutoroku_* ~/eztheme/sutoroku_$version
 	#this variable here tells the rest of the script whether or not that file was found
 	#really only used in the if statement 4 lines down
 	d=y
@@ -35,23 +35,24 @@ if [[ $d != "y" ]]; then
 	echo "It's not there."
 	echo "Let's fix that"
 	#where the .debs are stored
-	mkdir ~/packaged_themes
+	mkdir ~/eztheme
+	mkdir ~/eztheme/packaged_themes
 	#where the previous raw folder is stored
-	mkdir ~/sutoroku.old
+	mkdir ~/eztheme/sutoroku.old
 	#the directories we need to package the .deb
-	mkdir ~/sutoroku_$version
-	mkdir ~/sutoroku_$version/Applications
-	mkdir ~/sutoroku_$version/Applications/Sutoroku.app
-	mkdir ~/sutoroku_$version/Library
-	mkdir ~/sutoroku_$version/Library/Themes
-	mkdir ~/sutoroku_$version/DEBIAN
+	mkdir ~/eztheme/sutoroku_$version
+	mkdir ~/eztheme/sutoroku_$version/Applications
+	mkdir ~/eztheme/sutoroku_$version/Applications/Sutoroku.app
+	mkdir ~/eztheme/sutoroku_$version/Library
+	mkdir ~/eztheme/sutoroku_$version/Library/Themes
+	mkdir ~/eztheme/sutoroku_$version/DEBIAN
 	#finding out where we are
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	#moving necessary resources and setting proper permissions
-	cp $DIR/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/
-	cp $DIR/preinst ~/sutoroku_$version/DEBIAN/preinst
-	cp $DIR/postinst ~/sutoroku_$version/DEBIAN/postinst
-	cp $DIR/control ~/sutoroku_$version/DEBIAN/control
+	cp $DIR/icon.png ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/
+	cp $DIR/preinst ~/eztheme/sutoroku_$version/DEBIAN/preinst
+	cp $DIR/postinst ~/eztheme/sutoroku_$version/DEBIAN/postinst
+	cp $DIR/control ~/eztheme/sutoroku_$version/DEBIAN/control
 fi
 #straight moving the root folder in
 #This has been changed for using multiple themes (like alts)
@@ -71,7 +72,7 @@ while [[ $cp == "y" ]]
 	echo "Drag and drop your theme folder and press enter:"
 	read dir
 	echo ""
-	cp -rfa "${dir//\'}" ~/sutoroku_$version/Library/Themes/
+	cp -rfa "${dir//\'}" ~/eztheme/sutoroku_$version/Library/Themes/
 	echo "Alright! everything's in!"
 	echo "Would you like to add or change anymore? [y/n]"
 	read cp
@@ -86,9 +87,11 @@ if [[ $ico == "y" ]] || [[ $ico == "Y" ]]; then
 	echo ""
 	echo "Alright! Got it, copying it in now."
 	#first we rename the old to remove conflicts if it exists
-	mv ~/sutoroku_$version/Applications/Sutoroku.app/icon.png ~/sutoroku_$version/Applications/Sutoroku.app/icon-old.png 2>/dev/null
+	#this is silent so that if there is not an existing folder the user does not get an error
+	#there really isn't any threat for the error.
+	mv ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/icon.png ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/icon-old.png 2>/dev/null
 	#copies the icon and changes the name to match our control file
-	cp -rf "$icon" ~/sutoroku_$version/Applications/Sutoroku.app/icon.png
+	cp -rf "$icon" ~/eztheme/sutoroku_$version/Applications/Sutoroku.app/icon.png
 	echo "done!"
 	else
 	echo "Alright!"
@@ -104,17 +107,17 @@ echo "if not, the README.md has a nice little description of everything in the c
 echo "when you're ready press any key"
 #just a silent function to detect key input
 read -n 1 -s
-nano ~/sutoroku_$version/DEBIAN/control
+nano ~/eztheme/sutoroku_$version/DEBIAN/control
 clear
 echo "I'm starting the compile"
 #quick permissions for our friend the compiler
-chmod 755 ~/sutoroku_$version/DEBIAN/
-chmod 755 ~/sutoroku_$version/DEBIAN/*
+chmod 755 ~/eztheme/sutoroku_$version/DEBIAN/
+chmod 755 ~/eztheme/sutoroku_$version/DEBIAN/*
 #DO THE THING
-dpkg-deb -Zgzip -b ~/sutoroku_$version
+dpkg-deb -Zgzip -b ~/eztheme/sutoroku_$version
 #moving the .deb to a folder so it wont conflict with the script
 #also benefits tidiness
-mv ~/sutoroku*.deb ~/packaged_themes/
+mv ~/eztheme/sutoroku*.deb ~/eztheme/packaged_themes/
 echo "All done! The .deb is stored in the packaged_themes folder in your home folder"
 echo "Have a nice day!"
 #quit the script
