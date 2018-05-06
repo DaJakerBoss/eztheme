@@ -10,12 +10,12 @@ To kick things off, clone this repository onto your computer.
 *and you can have the updated files in a heartbeat.*  
 Open up your computer's terminal and find your way into the repo.  
 If you cloned this repo in your terminal it should just be in your home folder:  
-`cd ~/sutoroku_installer`  
+`cd ~/eztheme  
 I go more in depth in the next section
 
 If you extracted the zip, find where you put it.  
 Here's an example for your standard Downloads folder:  
-`cd ~/Downloads/sutoroku_installer`  
+`cd ~/Downloads/eztheme  
 I can make a standalone script for git if you'd like, for simplicity's sake.
 
 *Hacker voice* You're in.  
@@ -38,19 +38,19 @@ sudo apt-get install git
 Step 2: Clone my repository
 ```
 cd ~/
-git clone https://github.com/Dajakerboss/sutoroku-installer/
+git clone https://github.com/Dajakerboss/eztheme/
 ```
 
 Step 3: Enter the folder
 ```
-cd ~/sutoroku-installer
+cd ~/eztheme
 ```
 
 Boom!
 
 To update your files when I update the repo:
 ```
-cd ~/sutoroku-installer
+cd ~/eztheme
 git pull
 ```
 
