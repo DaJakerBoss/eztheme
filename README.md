@@ -15,7 +15,6 @@ I go more in depth in the next section
 
 If you extracted the zip, find where you put it.  
 Here's an example for your standard Downloads folder:  
-<<<<<<< HEAD
 `cd ~/Downloads/eztheme`  
 I can make a standalone script for git if you'd like, for simplicity's sake.
 
