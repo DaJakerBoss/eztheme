@@ -1,5 +1,5 @@
 # Sutoroku debian packager
-Easy (hopefully) way to package the icon theme Sutoroku for Ripped Themer.
+Easy (hopefully) way to package the icon themes from all themers.
 
 It should be easy, but I'm not all the way done as of this commit.
 
@@ -10,12 +10,20 @@ To kick things off, clone this repository onto your computer.
 *and you can have the updated files in a heartbeat.*  
 Open up your computer's terminal and find your way into the repo.  
 If you cloned this repo in your terminal it should just be in your home folder:  
+<<<<<<< HEAD
+`cd ~/eztheme`  
+=======
 `cd ~/eztheme  
+>>>>>>> origin/master
 I go more in depth in the next section
 
 If you extracted the zip, find where you put it.  
 Here's an example for your standard Downloads folder:  
+<<<<<<< HEAD
+`cd ~/Downloads/eztheme`  
+=======
 `cd ~/Downloads/eztheme  
+>>>>>>> origin/master
 I can make a standalone script for git if you'd like, for simplicity's sake.
 
 *Hacker voice* You're in.  
@@ -64,10 +72,10 @@ Item | Meaning
 Package | This is the name of the package as-installed. Name according to Cydia and `dpkg`
 Name | The name as appears in Cydia
 Version | The current version as you set it
-Section | Just how the repo will organize this. Don't touch unless the repo maintainers tell you
-Architecture | Tells the package manager it was meant for iPhones. Don't touch
-Depends | Tells the package manager and cydia what to install alongside this
-Maintainer | whoever keeps up with the .deb files
+Section | Just how the repo will organize this. Don't touch unless the repo maintainers tell you.
+Architecture | Tells the package manager it was meant for iPhones. Don't touch.
+Depends | Tells the package manager and cydia what to install alongside this.
+Maintainer | whoever keeps up with the .deb files. You should keep this as me so I can be contacted for errors in my script.
 Author | Whoever made the package. You.
 Description | What pops up in Cydia as the description
 Icon | Tells Cydia what to use as an icon. Don't touch, I've handled it in the script.
@@ -84,18 +92,23 @@ I decided against `vi` or `vim` since I didn't want to include a 5 page document
 There are a few lines that will need your attention:
 
 ```
-Depends: firmware (>= 8.0), com.anemonethemeing.anemone
+Depends: com.anemonethemeing.anemone
 ```
-If you find that your theme works on an iOS lower than 8.0, edit this to your liking.
+If you find that your theme works on a specific iOS range (e.g. iOS 8+), then add `firmware (>= [iOS Version])`, where iOS version is the lowest iOS that will be compatible.
+Example of this line:  
+`Depends: com.anemonethemeing.anemone, firmware (>= 8.0)` for a theme with iOS support for 8 and up.
 
 ```
-Package: com.rippedthemer.sutoroku
+Package: 
 ```
-If you want another name for your package as Cydia and apt installs it, feel free to mess with it!
+This is the name that iOS uses. Usually, you'd want to keep it in line with how iOS apps usually go:  
+`com.[author].[package]`  
+For instance, take Sutoroku by Ripped Themer:
+`com.rippedthemer.sutoroku`
 
 ### Preinst and Postinst files
 
-These are two files that I automatically place inside of the `~/sutoroku_[version]/DEBIAN/` folder.  
+These are two files that I automatically place inside of the `~/[package name]_[version]/DEBIAN/` folder.  
 These are the two files that will output messages in Cydia when the package is being installed.
 
 If you'd like to change these any, feel welcome to it!  
