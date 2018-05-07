@@ -3,27 +3,20 @@ Easy (hopefully) way to package the icon themes from all themers.
 
 It should be easy, but I'm not all the way done as of this commit.
 
-## Instructions
+## Instructions  
 To kick things off, clone this repository onto your computer.  
 *You can use `git` or you can just download the .zip file and extract it somewhere*  
 *Personally, I recommend installing and using git, that way I can issue updates directly to you*  
 *and you can have the updated files in a heartbeat.*  
 Open up your computer's terminal and find your way into the repo.  
 If you cloned this repo in your terminal it should just be in your home folder:  
-<<<<<<< HEAD
 `cd ~/eztheme`  
-=======
-`cd ~/eztheme  
->>>>>>> origin/master
 I go more in depth in the next section
 
 If you extracted the zip, find where you put it.  
 Here's an example for your standard Downloads folder:  
 <<<<<<< HEAD
 `cd ~/Downloads/eztheme`  
-=======
-`cd ~/Downloads/eztheme  
->>>>>>> origin/master
 I can make a standalone script for git if you'd like, for simplicity's sake.
 
 *Hacker voice* You're in.  
