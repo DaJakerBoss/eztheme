@@ -4,7 +4,35 @@
 #at least until i get around to something more complicated when i get time
 
 clear
-echo "Hello Themer!"
+echo "Welcome to EzTheme, version 0.0.1"
+echo "This tool was built for RippedThemer and Andy Wiiks"
+echo ""
+echo "Choose an option:"
+echo "[1] Build a package from scratch"
+echo "[2] Build a package from a zip file"
+read option
+if [[ $option == "2" ]]; then
+	echo "drag and drop the .zip file into your terminal"
+	read zip
+	echo ""
+	echo "Please type your desired package name"
+	echo "{Reccomended format: [package name]_[version]"
+	read zipname
+	rm ~/eztheme/*.zip 2>/dev/null
+	rm -r ~/eztheme/"$zipname" 2>/dev/null
+	mkdir ~/eztheme/"$zipname"
+	mkdir ~/eztheme/packaged_themes 2>/dev/null
+	cp "${zip//\'}" ~/eztheme/"$zipname"
+	unzip ~/eztheme/*.zip ~/eztheme/"$zipname"
+	chmod 755 ~/eztheme/"$zipname"/DEBIAN
+	chmod 755 ~/eztheme/"$zipname"/DEBIAN/*
+	dpkg-deb -Zgzip -b ~/eztheme/"$zipname"
+	mv ~/eztheme/*.deb ~/eztheme/packaged_themes
+	echo ""
+	echo "Ok! Your .deb has been packaged!"
+	echo "It is in ~/eztheme/packaged_themes!"
+	exit
+fi
 echo "First things first, let me get eveything in shape"
 echo "What is them name of this theme?"
 read name
