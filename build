@@ -8,8 +8,11 @@ echo "Welcome to EzTheme, version 0.0.1"
 echo "This tool was built for RippedThemer and Andy Wiiks"
 echo ""
 echo "Choose an option:"
+#Option 1, what I spent the entire time working on the script
 echo "[1] Build a package from scratch"
-echo "[2] Build a package from a zip file"
+#Option 2, extract a .zip file to a directory and build it as a .deb
+#This option works for all packages, not just themes
+echo "[2] Extract and package from a .zip file"
 read option
 if [[ $option == "2" ]]; then
 	echo "drag and drop the .zip file into your terminal"
@@ -18,15 +21,21 @@ if [[ $option == "2" ]]; then
 	echo "Please type your desired package name"
 	echo "{Reccomended format: [package name]_[version]"
 	read zipname
-	rm ~/eztheme/*.zip 2>/dev/null
+	#The following command is silenced because it is
+	#removing directories that may or may not exist
+	#If they don't exist it will throw an error
 	rm -r ~/eztheme/"$zipname" 2>/dev/null
+	#making our directories
 	mkdir ~/eztheme/"$zipname"
 	mkdir ~/eztheme/packaged_themes 2>/dev/null
-	cp "${zip//\'}" ~/eztheme/"$zipname"
-	unzip ~/eztheme/*.zip ~/eztheme/"$zipname"
+	#unzipping the .zip to a directory
+	unzip "${zip//\'}" ~/eztheme/"$zipname"
+	#Setting proper permissions for the necessary build files and folder
 	chmod 755 ~/eztheme/"$zipname"/DEBIAN
 	chmod 755 ~/eztheme/"$zipname"/DEBIAN/*
+	#the actual packager
 	dpkg-deb -Zgzip -b ~/eztheme/"$zipname"
+	#moving it to keep consistency
 	mv ~/eztheme/*.deb ~/eztheme/packaged_themes
 	echo ""
 	echo "Ok! Your .deb has been packaged!"
@@ -40,14 +49,13 @@ echo "What is the version?"
 read version
 echo "Let me see if the directories are there..."
 echo ""
-#Directory check to save time
 shopt -s nullglob
 #clears a variable. described further a few lines down
 d=n
 for path in ~/eztheme/"$name"_*/
 do
-	#this code is executed only if a directory starting with sutoroku_ exists
-	#this makes it easier to copy existing assets and change upon existing buildx
+	#this code is executed only if a matching directory for our theme exists
+	#this makes it easier to copy existing assets and change upon existing build
 	echo "It is! Saves us some time"
 	#copies our old icon theme to a new directory
 	#so it wont conflict with how I built the script
@@ -61,6 +69,7 @@ done
 #uses our variable d here
 #human translation:
 #if the directories don't yet exist, then we must create the neccesary directories
+#I'm good at bash, trust me
 if [[ $d != "y" ]]; then
 	echo "It's not there."
 	echo "Let's fix that"
@@ -85,7 +94,7 @@ if [[ $d != "y" ]]; then
 	cp $DIR/control ~/eztheme/"$name"_"$version"/DEBIAN/control
 fi
 #straight moving the root folder in
-#This has been changed for using multiple themes (like alts)
+#This has been changed for using multiple themes (like alts) since, ya know, there are usually more than one
 #We'll have to see how it works!
 #Mandatory theme copy for first run instance
 if [[ $d != "y" ]]; then
@@ -102,6 +111,9 @@ while [[ $cp == "y" ]]
 	echo "Drag and drop your theme folder and press enter:"
 	read dir
 	echo ""
+	#fancy copy just overwrites our old theme and keeps our directory structures
+	#actually, why the fuck is it destructive?
+	#I'll fix this
 	cp -rfa "${dir//\'}" ~/eztheme/"$name"_"$version"/Library/Themes/
 	echo "Alright! everything's in!"
 	echo "Would you like to add or change anymore? [y/n]"
@@ -153,3 +165,7 @@ echo "Have a nice day!"
 #quit the script
 exit
 
+# This script will automatically credit itself with a postinst message that you can see in Cydia
+# If you do not want this, I am creating ways around it :-)
+# But unfortunately I have a life and school, so I will need time
+# You can ask Ripped Themer all about that ;-P
