@@ -29,7 +29,7 @@ if [[ $option == "2" ]]; then
 	mkdir ~/eztheme/"$zipname"
 	mkdir ~/eztheme/packaged_themes 2>/dev/null
 	#unzipping the .zip to a directory
-	unzip "${zip//\'}" ~/eztheme/"$zipname"
+	unzip "${zip//\'}" -d ~/eztheme/"$zipname"
 	#Setting proper permissions for the necessary build files and folder
 	chmod 755 ~/eztheme/"$zipname"/DEBIAN
 	chmod 755 ~/eztheme/"$zipname"/DEBIAN/*
