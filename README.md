@@ -1,4 +1,4 @@
-# Sutoroku debian packager
+# EzTheme - The Easy Way to Package your Theme for Cydia
 Easy (hopefully) way to package the icon themes from all themers.
 
 It should be easy, but I'm not all the way done as of this commit.
