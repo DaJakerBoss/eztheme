@@ -93,6 +93,19 @@ if [[ $d != "y" ]]; then
 	cp $DIR/postinst ~/eztheme/"$name"_"$version"/DEBIAN/postinst
 	cp $DIR/control ~/eztheme/"$name"_"$version"/DEBIAN/control
 fi
+#Check to see if they want to clear out old themes
+echo "Would you like to clear out your old theme folders? [y/n]"
+read clear
+if [[ $clear == "y" ]]
+	then
+		echo "Are you sure? [y/n]"
+		read ishavengayforrachel
+		# Don't ask
+			if [[ $ishavenisgayforrachel == "y" ]]; then
+				rm -r ~/eztheme/"$name"_"$version"/Library/Themes/*
+				echo "Deleted :)"
+			fi
+fi
 #straight moving the root folder in
 #This has been changed for using multiple themes (like alts) since, ya know, there are usually more than one
 #We'll have to see how it works!
