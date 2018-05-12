@@ -1,11 +1,13 @@
 #!/bin/bash
 #I'm trying to get this out ASAP, so commenting will be brief
-#Build tool for the sole use of Ripped Themer's Sutoroku theme
+#Build tool for the use of anyone
 #at least until i get around to something more complicated when i get time
 
 clear
 echo "Welcome to EzTheme, version 0.0.1"
 echo "This tool was built for RippedThemer and Andy Wiiks"
+echo "special thanks to ipadkid358"
+#bc apparently you could just route echo to a text file this whole damn time
 echo ""
 echo "Choose an option:"
 #Option 1, what I spent the entire time working on the script
