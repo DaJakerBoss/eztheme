@@ -45,10 +45,11 @@ if [[ $option == "2" ]]; then
 	exit
 fi
 echo "First things first, let me get eveything in shape"
-echo "What is the short name of this theme?"
+echo "What is them name of this theme?"
 read name
 echo "What is the version?"
 read version
+
 echo "Let me see if the directories are there..."
 echo ""
 shopt -s nullglob
@@ -101,9 +102,9 @@ read clear
 if [[ $clear == "y" ]]
 	then
 		echo "Are you sure? [y/n]"
-		read isJakeAFurry
+		read ishavengayforrachel
 		# Don't ask
-			if [[ $isJakeAFurry == "y" ]]; then
+			if [[ $ishavenisgayforrachel == "y" ]]; then
 				rm -r ~/eztheme/"$name"_"$version"/Library/Themes/*
 				echo "Deleted :)"
 			fi
@@ -166,31 +167,7 @@ fi
 # read -n 1 -s
 # nano ~/eztheme/"$name"_"$version"/DEBIAN/control
 rm ~/eztheme/"$name"_"$version"/DEBIAN/control
-touch ~/eztheme/"$name"_"$version"/DEBIAN/control
-echo "What is the full package name?" control
-read pack
-echo "Package: '$pack'" control
-echo "Name: '$name'" control
-echo "Version: '$version'" control
-echo "would you like to specify a special section for this theme?"
-echo "If not, it will just appear in Themes"
-read sect
-if [[ $sect == "y" ]]; then
-	echo "what section?"
-	read section
-	echo "Section: '$section'" control
-	else; echo "Section: Themes" control
-fi
-echo "Architecture: iphoneos-arm" control
-echo "Depends: com.anemonetheming.anemone" control
-echo "Your author name please?"
-read auth
-echo "Author: '$auth'" control
-echo "Maintainer: DaJakerBoss <jakerh08@gmail.com>" control
-echo "How would you describe this theme in a short sentence?"
-read desc
-echo "Description: '$desc'" control
-echo "Icon: file:///Applications/'$name'.app/icon.png" control
+echo Authour
 clear
 echo "I'm starting the compile"
 #quick permissions for our friend the compiler
